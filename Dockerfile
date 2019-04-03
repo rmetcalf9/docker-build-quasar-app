@@ -7,6 +7,15 @@ RUN apk add --no-cache nodejs npm && \
     npm install -g quasar-cli && \
     echo "done"
 
-##docker build . -t metcarob/docker_build_quasar_app:latest
-##docker run --rm --name docker_build_quasar_app -d metcarob/docker_build_quasar_app:latest
+COPY build_quasar_app.sh /bin/build_quasar_app
 
+ENTRYPOINT ["/bin/sh"]
+
+##docker build . -t metcarob/docker_build_quasar_app:latest
+
+##Get into image for testing
+##docker run --rm --name docker_build_quasar_app --entrypoint /bin/sh -it metcarob/docker_build_quasar_app:latest
+
+
+##Use image to build a quasar app
+##docker run --rm --name docker_build_quasar_app metcarob/docker_build_quasar_app:latest build_quasar_app
