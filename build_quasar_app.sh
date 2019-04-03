@@ -12,6 +12,13 @@ build_quasar_app()
     echo "ERROR - failed to delete dist directory"
     exit 1
   fi
+  eval npm install
+  RES=$?
+  if [ ${RES} -ne 0 ]; then
+    echo ""
+    echo "npm install failed for ${QUASARAPPDIR}"
+    exit 1
+  fi
   eval quasar build
   RES=$?
   if [ ${RES} -ne 0 ]; then
