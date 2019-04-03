@@ -18,4 +18,4 @@ ENTRYPOINT ["/bin/sh"]
 
 
 ##Use image to build a quasar app
-##docker run --rm --name docker_build_quasar_app metcarob/docker_build_quasar_app:latest build_quasar_app
+## docker run --rm --name docker_build_quasar_app --mount type=bind,source=$(pwd),target=/ext_volume metcarob/docker_build_quasar_app:latest -c "build_quasar_app /ext_volume"
