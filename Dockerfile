@@ -4,7 +4,7 @@ MAINTAINER Robert Metcalf
 
 RUN apk add --no-cache nodejs npm && \
     npm install -g vue-cli && \
-    npm install -g quasar-cli && \
+    npm install -g @quasar/cli && \
     echo "done"
 
 COPY build_quasar_app.sh /bin/build_quasar_app
