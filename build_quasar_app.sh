@@ -3,6 +3,7 @@
 build_quasar_app()
 {
   QUASARAPPDIR=${1}
+  MODE=${2}
   echo "Executing Quasar webfrontend build for ${QUASARAPPDIR}"
   cd ${QUASARAPPDIR}
   if [ -d ./dist ]; then
@@ -19,7 +20,7 @@ build_quasar_app()
     echo "npm install failed for ${QUASARAPPDIR}"
     exit 1
   fi
-  eval quasar build
+  eval quasar build -m ${MODE}
   RES=$?
   if [ ${RES} -ne 0 ]; then
     echo ""
@@ -30,7 +31,7 @@ build_quasar_app()
     echo "ERROR - build command didn't create ${QUASARAPPDIR}/dist directory"
     exit 1
   fi
-}  
+}
 
 echo "Start of ${0}"
 QUASARAPPDIR=${1}
@@ -44,7 +45,16 @@ if [ ! -d ${QUASARAPPDIR} ]; then
   exit 1
 fi
 
-build_quasar_app ${QUASARAPPDIR}
+MODE=${2}
+if test "E${MODE}" = "E"
+then
+  echo "Defaulting to spa mode"
+  MODE=spa
+else
+  echo "Passed mode: ${MODE}"
+fi
+
+build_quasar_app ${QUASARAPPDIR} ${MODE}
 
 echo "End of ${0}"
 
