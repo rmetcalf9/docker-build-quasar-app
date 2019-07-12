@@ -4,6 +4,7 @@ build_quasar_app()
 {
   QUASARAPPDIR=${1}
   MODE=${2}
+  VER=${3}
   echo "Executing Quasar webfrontend build for ${QUASARAPPDIR}"
   cd ${QUASARAPPDIR}
   if [ -d ./dist ]; then
@@ -20,6 +21,11 @@ build_quasar_app()
     echo "npm install failed for ${QUASARAPPDIR}"
     exit 1
   fi
+
+  ecgi "Overwiting hard coded codebaseversion file ():"
+  echo "export default {codebasever: '${VER}'}" >> ./src/rjmversion.js
+
+
   eval quasar build -m ${MODE}
   RES=$?
   if [ ${RES} -ne 0 ]; then
@@ -48,13 +54,21 @@ fi
 MODE=${2}
 if test "E${MODE}" = "E"
 then
-  echo "Defaulting to spa mode"
+  echo "Defaulting mode to spa"
   MODE=spa
 else
   echo "Passed mode: ${MODE}"
 fi
+VER=${3}
+if test "E${VER}" = "E"
+then
+  echo "Defaulting VER to spa not_set_in_build"
+  VER=not_set_in_build
+else
+  echo "Passed ver: ${VER}"
+fi
 
-build_quasar_app ${QUASARAPPDIR} ${MODE}
+build_quasar_app ${QUASARAPPDIR} ${MODE} ${VER}
 
 echo "End of ${0}"
 
