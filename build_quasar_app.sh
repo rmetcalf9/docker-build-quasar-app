@@ -23,7 +23,8 @@ build_quasar_app()
   fi
 
   ecgi "Overwiting hard coded codebaseversion file ():"
-  echo "export default {codebasever: '${VER}'}" >> ./src/rjmversion.js
+  #must overwrite file not append so only single > 
+  echo "export default {codebasever: '${VER}'}" > ./src/rjmversion.js
 
 
   eval quasar build -m ${MODE}
