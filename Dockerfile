@@ -2,7 +2,7 @@ FROM alpine:3.9
 
 MAINTAINER Robert Metcalf
 
-RUN apk add --no-cache nodejs npm pngquant pngcrush optipng && \
+RUN apk add --no-cache nodejs npm pngquant pngcrush optipng gcc make && \
     npm install -g vue-cli && \
     npm install -g @quasar/cli && \
     echo "done"
