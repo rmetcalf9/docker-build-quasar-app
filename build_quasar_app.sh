@@ -14,6 +14,13 @@ build_quasar_app()
     echo "ERROR - failed to delete dist directory"
     exit 1
   fi
+  if [ -d ./node_modules ]; then
+    rm -rf node_modules
+  fi
+  if [ -d ./node_modules ]; then
+    echo "ERROR - failed to delete node_modules directory"
+    exit 1
+  fi
   eval npm install
   RES=$?
   if [ ${RES} -ne 0 ]; then
@@ -23,7 +30,7 @@ build_quasar_app()
   fi
 
   ecgi "Overwiting hard coded codebaseversion file ():"
-  #must overwrite file not append so only single > 
+  #must overwrite file not append so only single >
   echo "export default {codebasever: '${VER}'}" > ./src/rjmversion.js
 
 
