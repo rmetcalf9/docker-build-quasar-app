@@ -31,7 +31,8 @@ build_quasar_app()
 
   ecgi "Overwiting hard coded codebaseversion file ():"
   #must overwrite file not append so only single >
-  echo "export default {codebasever: '${VER}'}" > ./src/rjmversion.js
+  echo "/* eslint-disable */" > ./src/rjmversion.js
+  echo "export default { codebasever: '${VER}' }" >> ./src/rjmversion.js
 
 
   eval quasar build -m ${MODE}
