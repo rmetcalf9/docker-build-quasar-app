@@ -2,7 +2,7 @@ FROM alpine:3.9
 
 MAINTAINER Robert Metcalf
 
-RUN apk add --no-cache libxslt-dev libxml2-dev python3-dev nodejs npm pngquant pngcrush optipng gcc make libc-dev zlib zlib-dev bash-completion g++ pkgconfig autoconf automake libtool nasm build-base zlib-dev && \
+RUN apk add --no-cache nodejs npm pngquant pngcrush optipng gcc make libc-dev zlib zlib-dev bash-completion g++ pkgconfig autoconf automake libtool nasm build-base zlib-dev && \
     npm install -g vue-cli && \
     npm install -g @quasar/cli && \
     echo "done"
