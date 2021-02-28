@@ -78,7 +78,8 @@ else
 fi
 
 build_quasar_app ${QUASARAPPDIR} ${MODE} ${VER}
+RES=$?
 
-echo "End of ${0}"
+echo "End of ${0} - RES=${RES}"
 
-exit 0
+exit ${RES}
