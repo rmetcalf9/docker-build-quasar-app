@@ -1,3 +1,4 @@
 export svnMode=RJMDOCKERSIMPLE
 export DOCKER_USERNAME=metcarob
 export DOCKER_IMAGENAME=docker-build-quasar-app
+##export DOCKER_NOCACHE=TRUE
