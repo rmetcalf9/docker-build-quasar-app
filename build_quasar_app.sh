@@ -5,6 +5,7 @@ build_quasar_app()
   QUASARAPPDIR=${1}
   MODE=${2}
   VER=${3}
+  NODEMAXOLDSPACESIZE=${4}
   echo "Executing Quasar webfrontend build for ${QUASARAPPDIR}"
   cd ${QUASARAPPDIR}
   if [ -d ./dist ]; then
@@ -35,8 +36,18 @@ build_quasar_app()
   echo "export default { codebasever: '${VER}' }" >> ./src/rjmversion.js
 
 
+  if test "E${NODEMAXOLDSPACESIZE}" = "NOTSET"
+  then
+    echo "CMD: eval quasar build -m ${MODE}"
+    eval quasar build -m ${MODE}
+    RES=$?
+  else
+    echo "CMD: eval NODE_OPTIONS=--max-old-space-size=${NODEMAXOLDSPACESIZE} quasar build -m ${MODE}"
+    eval NODE_OPTIONS=--max-old-space-size=${NODEMAXOLDSPACESIZE} quasar build -m ${MODE}
+    RES=$?
+  fi
+
   eval quasar build -m ${MODE}
-  RES=$?
   if [ ${RES} -ne 0 ]; then
     echo ""
     echo "Quasar build failed for ${QUASARAPPDIR}"
@@ -77,7 +88,13 @@ else
   echo "Passed ver: ${VER}"
 fi
 
-build_quasar_app ${QUASARAPPDIR} ${MODE} ${VER}
+NODEMAXOLDSPACESIZE=${4}
+if test "E${NODEMAXOLDSPACESIZE}" = "E"
+then
+  NODEMAXOLDSPACESIZE=NOTSET
+fi
+
+build_quasar_app ${QUASARAPPDIR} ${MODE} ${VER} ${NODEMAXOLDSPACESIZE}
 RES=$?
 
 echo "End of ${0} - RES=${RES}"
