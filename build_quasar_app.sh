@@ -30,7 +30,7 @@ build_quasar_app()
     exit 1
   fi
 
-  ecgi "Overwiting hard coded codebaseversion file ():"
+  echo "Overwiting hard coded codebaseversion file ():"
   #must overwrite file not append so only single >
   echo "/* eslint-disable */" > ./src/rjmversion.js
   echo "export default { codebasever: '${VER}' }" >> ./src/rjmversion.js
@@ -48,9 +48,11 @@ build_quasar_app()
   fi
 
   eval quasar build -m ${MODE}
+  RES=$?
   if [ ${RES} -ne 0 ]; then
     echo ""
     echo "Quasar build failed for ${QUASARAPPDIR}"
+    echo "Command was: quasar build -m ${MODE}"
     exit 1
   fi
   if [ ! -d ./dist ]; then
