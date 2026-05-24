@@ -1,15 +1,31 @@
-FROM alpine:3.20
+FROM node:20-bookworm
 
 MAINTAINER Robert Metcalf
 
-RUN apk add --no-cache nodejs npm pngquant pngcrush optipng gcc make libc-dev zlib zlib-dev bash-completion g++ pkgconfig autoconf automake libtool nasm build-base zlib-dev && \
-    npm install -g vue-cli && \
-    npm install -g @quasar/cli && \
-    echo "done"
+# System dependencies for builds
+RUN apt-get update && apt-get install -y \
+    bash \
+    git \
+    python3 \
+    make \
+    g++ \
+    pkg-config \
+    build-essential \
+    openjdk-17-jdk \
+    libc6 \
+    && rm -rf /var/lib/apt/lists/*
 
+# Global Node tooling
+RUN npm install -g \
+    @quasar/cli \
+    vue-cli
+
+# Copy your script
 COPY build_quasar_app.sh /bin/build_quasar_app
+RUN chmod +x /bin/build_quasar_app
 
-ENTRYPOINT ["/bin/sh"]
+ENTRYPOINT ["/bin/bash"]
+
 
 ##docker build . -t metcarob/docker_build_quasar_app:latest
 
